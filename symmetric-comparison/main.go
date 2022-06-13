@@ -11,7 +11,7 @@ func do(lists [][]int) ([]int, error) {
 		return nil, errors.New("Min number of lists is 2")
 	}
 
-	symmetric := difference(nil, lists, nil)
+	symmetric := compare(nil, lists)
 	// map back to list and sort so tests are easier
 	keys := make([]int, 0, len(symmetric))
 	for k := range symmetric {
@@ -32,8 +32,8 @@ func createUniqueMap(list []int) map[int]bool {
 	return symmetric
 }
 
-// recursive symmetric different of int lists
-func difference(symmetric map[int]bool, lists [][]int, removed map[int]bool) map[int]bool {
+// recursive symmetric comparison of int lists
+func compare(symmetric map[int]bool, lists [][]int) map[int]bool {
 
 	var newlists [][]int
 	var lastlist map[int]bool
@@ -42,21 +42,16 @@ func difference(symmetric map[int]bool, lists [][]int, removed map[int]bool) map
 		lastlist = createUniqueMap(lists[len(lists)-1])
 		newlists = lists[0 : len(lists)-1]
 	}
-	if removed == nil {
-		removed = map[int]bool{}
-	}
+
 	if symmetric == nil {
-		return difference(lastlist, newlists, removed)
+		return compare(lastlist, newlists)
 	} else if newlists != nil {
-		for i, _ := range lastlist {
-			if ok := symmetric[i]; ok {
-				removed[i] = true
+		for i, _ := range symmetric {
+			if ok := lastlist[i]; !ok {
 				delete(symmetric, i)
-			} else if _, ok := removed[i]; !ok {
-				symmetric[i] = true
 			}
 		}
-		return difference(symmetric, newlists, removed)
+		return compare(symmetric, newlists)
 	} else {
 		return symmetric
 	}

@@ -34,7 +34,7 @@ func Test(t *testing.T) {
 				{1, 2, 3},
 				{4, 5, 6},
 			},
-			output:      []int{1, 2, 3, 4, 5, 6},
+			output:      []int{},
 			shouldError: false,
 		},
 		{
@@ -42,7 +42,7 @@ func Test(t *testing.T) {
 				{1, 2, 3},
 				{3, 4, 5, 6},
 			},
-			output:      []int{1, 2, 4, 5, 6},
+			output:      []int{3},
 			shouldError: false,
 		},
 		{
@@ -50,7 +50,7 @@ func Test(t *testing.T) {
 				{1, 2, 3},
 				{1, 2, 3, 4, 5, 6},
 			},
-			output:      []int{4, 5, 6},
+			output:      []int{1, 2, 3},
 			shouldError: false,
 		},
 		{
@@ -59,7 +59,7 @@ func Test(t *testing.T) {
 				{1, 2, 3, 4, 5, 6},
 				{3, 4},
 			},
-			output:      []int{5, 6},
+			output:      []int{3, 4},
 			shouldError: false,
 		},
 		{
@@ -69,17 +69,7 @@ func Test(t *testing.T) {
 				{3, 4, 5},
 				{4, 5},
 			},
-			output:      []int{6},
-			shouldError: false,
-		},
-		{
-			inputs: [][]int{
-				{1, 2, 3, 4, 5},
-				{1, 1, 2, 3, 4, 5, 6, 6, 6},
-				{3, 4, 5},
-				{4, 4, 5},
-			},
-			output:      []int{6},
+			output:      []int{4, 5},
 			shouldError: false,
 		},
 	}
